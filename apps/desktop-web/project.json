@@ -19,7 +19,7 @@
           "apps/desktop-web/src/favicon.ico",
           "apps/desktop-web/src/assets"
         ],
-        "styles": ["apps/desktop-web/src/styles.css"],
+        "styles": [],
         "scripts": [],
         "webpackConfig": "apps/desktop-web/webpack.config.js"
       },
