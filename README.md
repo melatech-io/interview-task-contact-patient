@@ -68,6 +68,7 @@ Seeding is done by posting to the seed controller. This is also available in a b
 # Project structure
 
 We use a NX monorepo (https://nx.dev/). The relevant folder structure is shown below.
+
     .
     ├── apps - Runnable applications
     │   ├── api - API application
