@@ -68,24 +68,24 @@ Seeding is done by posting to the seed controller. This is also available in a b
 # Project structure
 
 We use a NX monorepo (https://nx.dev/). The relevant folder structure is shown below.
-.
-├── apps - Runnable applications
-│   ├── api - API application
-│   │   └── src
-│   │       ├── app - Application code
-│   │       │   ├── controllers - All controller files
-│   │       │   ├── modules - All modules files. Here database entities and services can be found
-│   │       │   └── app.module.ts - File responsible to initializing modules, dependency injection etc., e.g. database connection
-│   │       └── main.ts - File responsible for starting api server
-│   └── desktop-web - Frontend application
-│       └── src
-│           ├── app - Application code
-│           │   ├── pages - Directory containing all pages
-│           │   └── app.tsx - File containing main styling and routing
-│           └── main.tsx - File responsible for rendering the frontend application
-├── docker-compose - Docker-compose file and assets for running mysql server
-└── libs - libraries shared between applications
-    └── dtos - DTOs shared between frontend and backend
+    .
+    ├── apps - Runnable applications
+    │   ├── api - API application
+    │   │   └── src
+    │   │       ├── app - Application code
+    │   │       │   ├── controllers - All controller files
+    │   │       │   ├── modules - All modules files. Here database entities and services can be found
+    │   │       │   └── app.module.ts - File responsible to initializing modules, dependency injection etc., e.g. database connection
+    │   │       └── main.ts - File responsible for starting api server
+    │   └── desktop-web - Frontend application
+    │       └── src
+    │           ├── app - Application code
+    │           │   ├── pages - Directory containing all pages
+    │           │   └── app.tsx - File containing main styling and routing
+    │           └── main.tsx - File responsible for rendering the frontend application
+    ├── docker-compose - Docker-compose file and assets for running mysql server
+    └── libs - libraries shared between applications
+        └── dtos - DTOs shared between frontend and backend
 
 # Notes
 
