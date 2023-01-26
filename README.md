@@ -63,7 +63,7 @@ In order to view swagger documentation for the API, the API must be running. Swa
 
 # Seeding data
 
-Data is seeded using the seed controller in API. At the top of the controller, `defaultPatientsCount` is used to determine how many patients should be created. You can change this value to experiment with larger datasets.
+Data is seeded using the seed controller in API. At the top of the `SeedController` on line 12 the `defaultPatientsCount` is used to determine how many patients should be created. You can change this value to experiment with larger datasets.
 
 Seeding is done by posting to the seed controller. This is also available in a button on the patient overview page.
 
