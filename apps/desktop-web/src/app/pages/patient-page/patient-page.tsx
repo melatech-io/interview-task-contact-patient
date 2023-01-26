@@ -142,6 +142,9 @@ export function PatientPage(props: PatientPageProps) {
         <Descriptions.Item label="Contacted">
           {patient.contacted ? 'Yes' : 'No'}
         </Descriptions.Item>
+        <Descriptions.Item label="Gender">
+          {patient.gender?.name}
+        </Descriptions.Item>
         <Descriptions.Item label="Patient created">
           {format(new Date(patient.created), 'dd-MM-yyyy')}
         </Descriptions.Item>
