@@ -17,13 +17,15 @@ Below is a list of requirements from the doctor:
 - The doctor should be able to start iterating through the patients from the patient selected (e.g. number 4 on the list)
 - The doctor should be able to change the state of the patient to contacted or not contacted
 - The doctor should not be required to return to the list view to go to the next patient. There should be some next / previous buttons when viewing a patient. However, being able to iterate through all patients in one go is not a requirement, but something that the doctor insists is needed.
-- When the doctor returns to the list view, the most recent data should be displayed (e.g. a patient marked as contacted should be shown as such on the list page)
+- When the doctor returns to the list view, the most recent data should be displayed (e.g. a patient marked as contacted should be shown as such on the list page) - maybe implemented? You should test this :-)
+
+There are several todos throughout the solution that can be a good idea to start with.
 
 
 # Setup
 
 ## NVM
-This project uses Node Version Manager (nvm) to ensure all developers are running the same version of node. Documentation for NVM can be found here:
+This project uses Node Version Manager (nvm) to ensure all developers are running the same version of node. NVM must therefore be installed. Documentation for NVM can be found here:
 https://github.com/nvm-sh/nvm
 
 To use the correct node version, use the following command:
@@ -51,13 +53,13 @@ The database password is "guest1234" for both root and the api user. See `./dock
 
 Run `nx serve desktop-web` to run the web application. Navigate to http://localhost:4200/. The app will automatically reload if you change any of the source files.
 
+## Running nestjs application
+
+Run `nx serve api` to run the nestjs api application. It is available on http://localhost:3333. The api will automatically reload if you change any of the source files.
+
 ## Viewing swagger documentation
 
 In order to view swagger documentation for the API, the API must be running. Swagger will be available on http://localhost:3333/api
-
-## Running nestjs application
-
-Run `nx serve api` to run the web application. Navigate to http://localhost:4200/. The app will automatically reload if you change any of the source files.
 
 # Seeding data
 
@@ -71,7 +73,7 @@ We use a NX monorepo (https://nx.dev/). The relevant folder structure is shown b
 
     .
     ├── apps - Runnable applications
-    │   ├── api - API application
+    │   ├── api - NestJS API application
     │   │   └── src
     │   │       ├── app - Application code
     │   │       │   ├── controllers - All controller files
@@ -87,6 +89,10 @@ We use a NX monorepo (https://nx.dev/). The relevant folder structure is shown b
     ├── docker-compose - Docker-compose file and assets for running mysql server
     └── libs - libraries shared between applications
         └── dtos - DTOs shared between frontend and backend
+
+# Component library
+
+Ant design is used as component library. You can find all components and their documentation here at: https://ant.design/components/overview 
 
 # Notes
 
