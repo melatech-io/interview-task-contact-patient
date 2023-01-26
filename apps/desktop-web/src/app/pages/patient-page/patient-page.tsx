@@ -22,6 +22,10 @@ export function PatientPage(props: PatientPageProps) {
   // State for loading detailed patient
   const [loadingPatient, setLoadingPatient] = useState(false);
 
+  // TODO - implement
+  const currentPatientIndex = 0;
+  const totalPatients = 0;
+
   /**
    * Fetch patient details when ID changes.
    */
@@ -101,7 +105,7 @@ export function PatientPage(props: PatientPageProps) {
             icon={<LeftOutlined />}
             onClick={() => history.push(PatientOverviewUrl)}
           />
-          <h1>Patient: {patient.ssn}</h1>
+          <h1>({currentPatientIndex} / {totalPatients}) Patient: {patient.ssn}</h1>
         </div>
 
         <div
@@ -117,6 +121,8 @@ export function PatientPage(props: PatientPageProps) {
             type="primary"
             onClick={() => goToPreviousPatient()}
             icon={<LeftOutlined />}
+            // TODO - maybe update the disabled state?
+            disabled={currentPatientIndex === 0}
           />
           <Button
             type="primary"
@@ -128,6 +134,8 @@ export function PatientPage(props: PatientPageProps) {
             type="primary"
             onClick={() => goToNextPatient()}
             icon={<RightOutlined />}
+            // TODO - maybe update the disabled state?
+            disabled={currentPatientIndex === totalPatients - 1}
           />
         </div>
       </div>
