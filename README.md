@@ -39,7 +39,7 @@ To install the required packages, you must have yarn installed. Then run the com
 
 ## Application cache and wierd problems
 
-If you experience any wierd problems that might be related to build cache, you can always delete the `/dist` directory and rebuild your application. 
+If you experience any wierd problems that might be related to build cache, you can always delete the `/dist` and `/node_modules/.cache` directories and rebuild your application. 
 
 Furthermore, deleting the `/node_modules` directory and running `yarn install` can also be a good troubleshooting technique.
 
@@ -51,11 +51,11 @@ The database password is "guest1234" for both root and the api user. See `./dock
 
 ## Running react application
 
-Run `nx serve desktop-web` to run the web application. Navigate to http://localhost:4200/. The app will automatically reload if you change any of the source files.
+Run `yarn nx serve desktop-web` to run the web application. Navigate to http://localhost:4200/. The app will automatically reload if you change any of the source files.
 
 ## Running nestjs application
 
-Run `nx serve api` to run the nestjs api application. It is available on http://localhost:3333. The api will automatically reload if you change any of the source files.
+Run `yarn nx serve api` to run the nestjs api application. It is available on http://localhost:3333. The api will automatically reload if you change any of the source files.
 
 ## Viewing swagger documentation
 
