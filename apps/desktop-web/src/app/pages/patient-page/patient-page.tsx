@@ -5,6 +5,7 @@ import axios from 'axios';
 import { format } from 'date-fns';
 import { useEffect, useState } from 'react';
 import { RouteComponentProps, useHistory } from 'react-router-dom';
+import { usePatients } from '../../../context/patients';
 import { PatientOverviewUrl } from '../urls';
 
 export type PatientPageProps = RouteComponentProps<{ patientId: string }>;
@@ -22,9 +23,15 @@ export function PatientPage(props: PatientPageProps) {
   // State for loading detailed patient
   const [loadingPatient, setLoadingPatient] = useState(false);
 
-  // TODO - implement
-  const currentPatientIndex = 0;
-  const totalPatients = 0;
+  // Get all patients from the context
+  const { contactedPatients, notContactedPatients } = usePatients();
+  const patients = patient?.contacted
+    ? contactedPatients
+    : notContactedPatients;
+
+  // Get the index of the current patient and the total number of patients
+  const currentPatientIndex = patients.findIndex((p) => p.id === patient?.id);
+  const totalPatients = patients.length;
 
   /**
    * Fetch patient details when ID changes.
@@ -105,7 +112,9 @@ export function PatientPage(props: PatientPageProps) {
             icon={<LeftOutlined />}
             onClick={() => history.push(PatientOverviewUrl)}
           />
-          <h1>({currentPatientIndex} / {totalPatients}) Patient: {patient.ssn}</h1>
+          <h1>
+            ({currentPatientIndex + 1} / {totalPatients}) Patient: {patient.ssn}
+          </h1>
         </div>
 
         <div
