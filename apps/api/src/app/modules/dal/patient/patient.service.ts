@@ -75,10 +75,11 @@ export class PatientService {
     id: string,
     patient: UpdatePatientDto
   ): Promise<DetailedPatientDto> {
-    const existingPatient = await this.repo.findOne(patient.id);
+    // Original used patient.id, but id is excluded from UpdatePatientDto
+    const existingPatient = await this.repo.findOne(id);
 
     if (!existingPatient) {
-      throw new NotFoundException(`Patient with id ${patient.id} not found`);
+      throw new NotFoundException(`Patient with id ${id} not found`);
     }
 
     return this.repo.save({

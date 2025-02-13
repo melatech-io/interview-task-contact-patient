@@ -24,7 +24,8 @@ export function PatientPage(props: PatientPageProps) {
   const [loadingPatient, setLoadingPatient] = useState(false);
 
   // Get all patients from the context
-  const { contactedPatients, notContactedPatients } = usePatients();
+  const { contactedPatients, notContactedPatients, fetchPatients } =
+    usePatients();
   const patients = patient?.contacted
     ? contactedPatients
     : notContactedPatients;
@@ -58,8 +59,45 @@ export function PatientPage(props: PatientPageProps) {
    * @param newContactedValue
    */
   const markContacted = (newContactedValue: boolean) => {
-    // TODO - implement
-    console.log('TODO - implement');
+    // create a new patient object with the new contacted value
+    const updatedPatient = {
+      ...patient,
+      contacted: newContactedValue,
+    };
+
+    // Send PATCH request to update patient
+    axios
+      .patch(`http://localhost:3333/patients/${patientId}`, updatedPatient)
+      .then((response) => {
+        if (response?.data) {
+          // if the patient was the only patient, go to patient overview
+          if (totalPatients === 1) {
+            goToPatientOverview();
+            return;
+          }
+          // if the patient was not the last patient
+          if (currentPatientIndex !== totalPatients - 1) {
+            // re-fetch patients for new totalpatients
+            fetchPatients();
+            // then go to the next patient
+            goToNextPatient();
+            return;
+          }
+          // if patient was the last patient
+          // re-fetch patients for new totalpatients
+          fetchPatients();
+          // go to the previous patient
+          goToPreviousPatient();
+          return;
+        }
+      });
+  };
+
+  /**
+   * Function for going to patient overview.
+   */
+  const goToPatientOverview = () => {
+    history.push(PatientOverviewUrl);
   };
 
   /**
@@ -122,10 +160,7 @@ export function PatientPage(props: PatientPageProps) {
             gap: '16px',
           }}
         >
-          <Button
-            icon={<LeftOutlined />}
-            onClick={() => history.push(PatientOverviewUrl)}
-          />
+          <Button icon={<LeftOutlined />} onClick={goToPatientOverview} />
           <h1>
             ({currentPatientIndex + 1} / {totalPatients}) Patient: {patient.ssn}
           </h1>

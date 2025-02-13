@@ -11,11 +11,13 @@ import {
 type PatientsContextProps = {
   contactedPatients: ListPatientDto[];
   notContactedPatients: ListPatientDto[];
+  fetchPatients: () => void;
 };
 
 const PatientsContext = createContext<PatientsContextProps>({
   contactedPatients: [],
   notContactedPatients: [],
+  fetchPatients: () => undefined,
 });
 
 export const PatientsProvider = ({ children }: { children: ReactNode }) => {
@@ -50,7 +52,7 @@ export const PatientsProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <PatientsContext.Provider
-      value={{ contactedPatients, notContactedPatients }}
+      value={{ contactedPatients, notContactedPatients, fetchPatients }}
     >
       {children}
     </PatientsContext.Provider>
