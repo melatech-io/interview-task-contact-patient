@@ -4,7 +4,7 @@ services:
     container_name: cp-mariadb
     image: mariadb:10.2
     ports:
-      - '3306:3306'
+      - '3307:3306'
     volumes:
       - type: bind
         source: ./assets/init-database.sql

@@ -5,7 +5,8 @@ import axios from 'axios';
 import { format } from 'date-fns';
 import { useEffect, useState } from 'react';
 import { RouteComponentProps, useHistory } from 'react-router-dom';
-import { PatientOverviewUrl } from '../urls';
+import { usePatients } from '../../../context/patients';
+import { PatientOverviewUrl, PatientUrl } from '../urls';
 
 export type PatientPageProps = RouteComponentProps<{ patientId: string }>;
 
@@ -22,9 +23,16 @@ export function PatientPage(props: PatientPageProps) {
   // State for loading detailed patient
   const [loadingPatient, setLoadingPatient] = useState(false);
 
-  // TODO - implement
-  const currentPatientIndex = 0;
-  const totalPatients = 0;
+  // Get all patients from the context
+  const { contactedPatients, notContactedPatients, fetchPatients } =
+    usePatients();
+  const patients = patient?.contacted
+    ? contactedPatients
+    : notContactedPatients;
+
+  // Get the index of the current patient and the total number of patients
+  const currentPatientIndex = patients.findIndex((p) => p.id === patient?.id);
+  const totalPatients = patients.length;
 
   /**
    * Fetch patient details when ID changes.
@@ -51,24 +59,78 @@ export function PatientPage(props: PatientPageProps) {
    * @param newContactedValue
    */
   const markContacted = (newContactedValue: boolean) => {
-    // TODO - implement
-    console.log('TODO - implement');
+    // create a new patient object with the new contacted value
+    const updatedPatient = {
+      ...patient,
+      contacted: newContactedValue,
+    };
+
+    // Send PATCH request to update patient
+    axios
+      .patch(`http://localhost:3333/patients/${patientId}`, updatedPatient)
+      .then((response) => {
+        if (response?.data) {
+          // if the patient was the only patient, go to patient overview
+          if (totalPatients === 1) {
+            goToPatientOverview();
+            return;
+          }
+          // if the patient was not the last patient
+          if (currentPatientIndex !== totalPatients - 1) {
+            // re-fetch patients for new totalpatients
+            fetchPatients();
+            // then go to the next patient
+            goToNextPatient();
+            return;
+          }
+          // if patient was the last patient
+          // re-fetch patients for new totalpatients
+          fetchPatients();
+          // go to the previous patient
+          goToPreviousPatient();
+          return;
+
+          // used fetchPatients() instead of useEffect,
+          // so the data is re-fetched only when the patients are updated
+        }
+      });
+  };
+
+  /**
+   * Function for going to patient overview.
+   */
+  const goToPatientOverview = () => {
+    history.push(PatientOverviewUrl);
   };
 
   /**
    * Function for going to the previous patient.
    */
   const goToPreviousPatient = () => {
-    // TODO - implement
-    console.log('TODO - implement');
+    // If the current patient is the first patient, return
+    if (currentPatientIndex === 0) {
+      return;
+    }
+    // Get the previous patient fro patients
+    const previousPatientIndex = currentPatientIndex - 1;
+    const previousPatient = patients[previousPatientIndex];
+    // Navigate to the previous patient
+    history.push(PatientUrl.replace(':patientId', previousPatient.id));
   };
 
   /**
    * Function for going to the next patient.
    */
   const goToNextPatient = () => {
-    // TODO - implement
-    console.log('TODO - implement');
+    // If the current patient is the last patient, return
+    if (currentPatientIndex === totalPatients - 1) {
+      return;
+    }
+    // Get the next patient from patients
+    const nextPatientIndex = currentPatientIndex + 1;
+    const nextPatient = patients[nextPatientIndex];
+    // Navigate to the next patient
+    history.push(PatientUrl.replace(':patientId', nextPatient.id));
   };
 
   // If loading patient, show loading animation
@@ -101,11 +163,10 @@ export function PatientPage(props: PatientPageProps) {
             gap: '16px',
           }}
         >
-          <Button
-            icon={<LeftOutlined />}
-            onClick={() => history.push(PatientOverviewUrl)}
-          />
-          <h1>({currentPatientIndex} / {totalPatients}) Patient: {patient.ssn}</h1>
+          <Button icon={<LeftOutlined />} onClick={goToPatientOverview} />
+          <h1>
+            ({currentPatientIndex + 1} / {totalPatients}) Patient: {patient.ssn}
+          </h1>
         </div>
 
         <div

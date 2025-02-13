@@ -11,7 +11,7 @@ import { allDatabaseEntities, DalModule } from './modules/dal';
         return {
           type: 'mariadb',
           host: 'localhost',
-          port: 3306,
+          port: 3307,
           database: 'api',
           username: 'api',
           password: 'guest1234',
