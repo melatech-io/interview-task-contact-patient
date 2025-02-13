@@ -6,7 +6,7 @@ import { format } from 'date-fns';
 import { useEffect, useState } from 'react';
 import { RouteComponentProps, useHistory } from 'react-router-dom';
 import { usePatients } from '../../../context/patients';
-import { PatientOverviewUrl } from '../urls';
+import { PatientOverviewUrl, PatientUrl } from '../urls';
 
 export type PatientPageProps = RouteComponentProps<{ patientId: string }>;
 
@@ -66,16 +66,30 @@ export function PatientPage(props: PatientPageProps) {
    * Function for going to the previous patient.
    */
   const goToPreviousPatient = () => {
-    // TODO - implement
-    console.log('TODO - implement');
+    // If the current patient is the first patient, return
+    if (currentPatientIndex === 0) {
+      return;
+    }
+    // Get the previous patient fro patients
+    const previousPatientIndex = currentPatientIndex - 1;
+    const previousPatient = patients[previousPatientIndex];
+    // Navigate to the previous patient
+    history.push(PatientUrl.replace(':patientId', previousPatient.id));
   };
 
   /**
    * Function for going to the next patient.
    */
   const goToNextPatient = () => {
-    // TODO - implement
-    console.log('TODO - implement');
+    // If the current patient is the last patient, return
+    if (currentPatientIndex === totalPatients - 1) {
+      return;
+    }
+    // Get the next patient from patients
+    const nextPatientIndex = currentPatientIndex + 1;
+    const nextPatient = patients[nextPatientIndex];
+    // Navigate to the next patient
+    history.push(PatientUrl.replace(':patientId', nextPatient.id));
   };
 
   // If loading patient, show loading animation
