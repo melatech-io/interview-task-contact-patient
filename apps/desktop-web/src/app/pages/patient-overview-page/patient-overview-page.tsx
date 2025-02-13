@@ -45,6 +45,8 @@ export function PatientOverviewPage() {
    * Fetch patients from the API when the filterContacted state changes
    */
   useEffect(() => {
+    // useffect gets the data from the API when component is mounted,
+    // so list of patients is updated
     getPatientData(filterContacted);
   }, [filterContacted]);
 
