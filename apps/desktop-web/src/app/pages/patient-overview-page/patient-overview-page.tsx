@@ -47,6 +47,9 @@ export function PatientOverviewPage() {
   useEffect(() => {
     // useffect gets the data from the API when component is mounted,
     // so list of patients is updated
+
+    // patient-overview could also use usePatients to get the list of patients,
+    // but was not part of the assignment
     getPatientData(filterContacted);
   }, [filterContacted]);
 

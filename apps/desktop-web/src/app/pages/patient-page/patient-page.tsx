@@ -89,6 +89,9 @@ export function PatientPage(props: PatientPageProps) {
           // go to the previous patient
           goToPreviousPatient();
           return;
+
+          // used fetchPatients() instead of useEffect,
+          // so the data is re-fetched only when the patients are updated
         }
       });
   };
